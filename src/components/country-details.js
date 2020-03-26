@@ -17,7 +17,8 @@ export default ({country}) => {
       <TableBody>
         {Object.keys(country).map(prop => {
             let propName = prop.charAt(0).toUpperCase() + prop.slice(1);
-            let value = prop == 'flag'? <img src={country.flag} width="300" /> : country[prop]; 
+            let value = prop === 'flag'? <img src={country.flag} width="300" /> : country[prop];
+            if (prop === 'population') value = value.toLocaleString();
           return <TableRow key={prop}>
             <TableCell component="th" scope="row">{propName}</TableCell>
             <TableCell align="center">{value}</TableCell>

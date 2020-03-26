@@ -5,9 +5,7 @@ import SideBar from './side-bar'
 import BackButton from './back-button'
 import CountryDetails from './country-details'
 import { makeStyles } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Divider from '@material-ui/core/Divider';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -80,36 +78,19 @@ export default (props) => {
 
                     return <React.Fragment>
 
-                    <Drawer
-                        className={classes.drawer}
-                        variant="permanent"
-                        classes={{
-                            paper: classes.drawerPaper,
-                        }}
-                        anchor="left"
-                    >
-                        <div className={classes.toolbar} />
-                        <Divider />
+                        <SideBar id={letter} list={Object.keys(data)} sort={true} showInUpperCase={true} path={url} level={0}
+                            drawerClasses={classes.drawer} drawerPaperClasses={classes.drawerPaper} toolbarClasses={classes.toolbar} />
 
-                        <SideBar id={letter} list={Object.keys(data)} sort={true} showInUpperCase={true} path={url} level={0} />
-                    </Drawer>
-                    <main className={classes.content}>
-                        <div className={classes.toolbar} />
-                        <div className={classes.root}>
-                            <Drawer className={classes.drawerS}
-                                variant="permanent"
-                                classes={{
-                                    paper: classes.drawerPaperS,
-                                }}
-                                anchor="left" >
-                                <div className={classes.toolbar} />
-                                <Divider />
-                                <SideBar id={country} list={letter && data[letter] && Object.keys(data[letter])} path={url} level={1} />
-                            </Drawer>
-                            <CountryDetails country={country && data[letter][country]} />
-                        </div>
-                    </main>
-                </React.Fragment>}
+                        <main className={classes.content}>
+                            <div className={classes.toolbar} />
+                            <div className={classes.root}>
+
+                                <SideBar id={country} list={letter && data[letter] && Object.keys(data[letter])} path={url} level={1}
+                                    drawerClasses={classes.drawerS} drawerPaperClasses={classes.drawerPaperS} toolbarClasses={classes.toolbar} />
+                                <CountryDetails country={country && data[letter][country]} />
+                            </div>
+                        </main>
+                    </React.Fragment>}
                 } />
             </div>
         </Router>);
