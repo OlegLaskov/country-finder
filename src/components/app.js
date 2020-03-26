@@ -1,7 +1,8 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect} from 'react'
 import {fetchCountries} from '../actions'
-import {Route, BrowserRouter as Router, Link} from 'react-router-dom'
+import {Route, BrowserRouter as Router} from 'react-router-dom'
 import SideBar from './side-bar'
+import BackButton from './back-button'
 import CountryDetails from './country-details'
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -10,13 +11,10 @@ import Divider from '@material-ui/core/Divider';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 
 export default (props) => {
     const {data, loading, error, dispatch} = props
 
-    let [path, setPath] = useState('/')
-    
     useEffect(()=>{
         if(!data){
             dispatch(fetchCountries())
@@ -60,6 +58,7 @@ export default (props) => {
     }));
 
     const classes = useStyles();
+    console.log('data', data)
 
     if(loading) return <p>Loading...</p>;
     if(error) return <p>Error, try again</p>;
@@ -72,14 +71,13 @@ export default (props) => {
                         <Typography variant="h6" className={classes.title}>
                             Country finder
                         </Typography>
-                            <Button component={Link} to={path.length > 3 ? path.substring(0,2) : '/'} color="inherit" >Back</Button>
+                        <BackButton />
                     </Toolbar>
                 </AppBar>
                     
                 <Route path={"/:letter?/:country?"} render={({match: {params:{
                     letter, country}, url}}) => {
 
-                    setPath(url);
                     return <React.Fragment>
 
                     <Drawer
@@ -98,7 +96,6 @@ export default (props) => {
                     <main className={classes.content}>
                         <div className={classes.toolbar} />
                         <div className={classes.root}>
-                            {/* <ScopedCssBaseline> */}
                             <Drawer className={classes.drawerS}
                                 variant="permanent"
                                 classes={{
@@ -110,12 +107,10 @@ export default (props) => {
                                 <SideBar id={country} list={letter && data[letter] && Object.keys(data[letter])} path={url} level={1} />
                             </Drawer>
                             <CountryDetails country={country && data[letter][country]} />
-                            {/* </ScopedCssBaseline> */}
                         </div>
                     </main>
                 </React.Fragment>}
                 } />
-                    
             </div>
         </Router>);
 }
