@@ -6,12 +6,16 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Drawer from '@material-ui/core/Drawer';
 import Divider from '@material-ui/core/Divider';
 
-export default ({id, list, showInUpperCase, sort, path, level, drawerClasses, drawerPaperClasses, toolbarClasses}) => {
+export default ({id, list, showInUpperCase, sort, path, level, drawerClasses, drawerPaperClasses, toolbarClasses, search}) => {
 
     const toPath = !level ? '/' : '/' + path[1] + '/';
 
-    if(!list || !(list.length)) return null;
+    if(!list || !(list.length)) {
+        const message = path.length > 1 ? 'No countries were found' : 'Select letter or start typing the name of the country in the search field'
+        return <h2>{message}</h2>;
+    }
 
+    search && list && list.length && (list = list.filter((item) => (item.toLowerCase().startsWith(search.toLowerCase()))));
     sort && (list.sort((a, b) => a.localeCompare(b)));
     
     return <Drawer

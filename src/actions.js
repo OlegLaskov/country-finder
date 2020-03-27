@@ -24,4 +24,8 @@ const fetchCountries = () => {
     return { type: 'FETCHED_COUNTRIES' }
 };
 
-export {requestCountries, requestCountriesSuccess, requestCountriesError, fetchCountries}
+const fillSearch = (data) => {
+    return {type: 'SEARCH', data: data}
+}
+
+export {requestCountries, requestCountriesSuccess, requestCountriesError, fetchCountries, fillSearch}

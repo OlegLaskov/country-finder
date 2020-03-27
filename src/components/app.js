@@ -2,6 +2,7 @@ import React, {useEffect} from 'react'
 import {fetchCountries} from '../actions'
 import {Route, BrowserRouter as Router} from 'react-router-dom'
 import SideBar from './side-bar'
+import Search from './search'
 import BackButton from './back-button'
 import CountryDetails from './country-details'
 import { makeStyles } from '@material-ui/core/styles';
@@ -11,7 +12,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
 export default (props) => {
-    const {data, loading, error, dispatch} = props
+    const {data, loading, error, dispatch, search} = props
 
     useEffect(()=>{
         if(!data){
@@ -56,7 +57,6 @@ export default (props) => {
     }));
 
     const classes = useStyles();
-    console.log('data', data)
 
     if(loading) return <p>Loading...</p>;
     if(error) return <p>Error, try again</p>;
@@ -69,6 +69,7 @@ export default (props) => {
                         <Typography variant="h6" className={classes.title}>
                             Country finder
                         </Typography>
+                        <Search />
                         <BackButton />
                     </Toolbar>
                 </AppBar>
@@ -86,7 +87,8 @@ export default (props) => {
                             <div className={classes.root}>
 
                                 <SideBar id={country} list={letter && data[letter] && Object.keys(data[letter])} path={url} level={1}
-                                    drawerClasses={classes.drawerS} drawerPaperClasses={classes.drawerPaperS} toolbarClasses={classes.toolbar} />
+                                    drawerClasses={classes.drawerS} drawerPaperClasses={classes.drawerPaperS} toolbarClasses={classes.toolbar}
+                                    search={search} />
                                 <CountryDetails country={country && data[letter][country]} />
                             </div>
                         </main>
