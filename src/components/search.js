@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
-import {Provider, connect} from 'react-redux'
-import {Link, withRouter} from 'react-router-dom'
-import InputBase from '@material-ui/core/InputBase'
+import {connect} from 'react-redux'
+import {withRouter} from 'react-router-dom'
+import {InputBase} from '@material-ui/core'
 import { fade, makeStyles } from '@material-ui/core/styles'
 import SearchIcon from '@material-ui/icons/Search'
 import {fillSearch} from '../actions'
@@ -54,7 +54,7 @@ const Search = withRouter((props) => {
     const pathnameLetter = pathname.substring(1,2)
     const {history, dispatch, search} = props
     const classes = useStyles();
-    // const [searchValue, setSearch] = useState('')
+    
     const onChangeSearch = ({target:{value}}) => {
 
         if(value){
@@ -74,7 +74,7 @@ const Search = withRouter((props) => {
 
     useEffect(()=>{
         if(search && pathnameLetter && pathnameLetter !== search.substring(0,1)){
-            dispatch(fillSearch(pathnameLetter))
+            dispatch(fillSearch(''))
         }
     }, [pathname])
 
@@ -85,13 +85,13 @@ const Search = withRouter((props) => {
         <InputBase
             placeholder="Search…"
             classes={{
-            root: classes.inputRoot,
-            input: classes.inputInput,
+                root: classes.inputRoot,
+                input: classes.inputInput,
             }}
             inputProps={{ 'aria-label': 'search' }}
             autoFocus
             value={search}
-            onChange={onChangeSearch} // ({target:{value}})=>{setSearch(value)}
+            onChange={onChangeSearch}
         />
     </div>;
 })

@@ -6,10 +6,7 @@ import Search from './search'
 import BackButton from './back-button'
 import CountryDetails from './country-details'
 import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
+import {CssBaseline, AppBar, Toolbar, Typography} from '@material-ui/core';
 
 export default (props) => {
     const {data, loading, error, dispatch, search} = props
@@ -75,10 +72,9 @@ export default (props) => {
                 </AppBar>
                     
                 <Route path={"/:letter?/:country?"} render={({match: {params:{
-                    letter, country}, url}}) => {
+                    letter, country}, url}, history}) => {
 
                     return <React.Fragment>
-
                         <SideBar id={letter} list={Object.keys(data)} sort={true} showInUpperCase={true} path={url} level={0}
                             drawerClasses={classes.drawer} drawerPaperClasses={classes.drawerPaper} toolbarClasses={classes.toolbar} />
 
@@ -88,7 +84,7 @@ export default (props) => {
 
                                 <SideBar id={country} list={letter && data[letter] && Object.keys(data[letter])} path={url} level={1}
                                     drawerClasses={classes.drawerS} drawerPaperClasses={classes.drawerPaperS} toolbarClasses={classes.toolbar}
-                                    search={search} />
+                                    search={search} history={history} />
                                 <CountryDetails country={country && data[letter][country]} />
                             </div>
                         </main>
